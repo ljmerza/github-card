@@ -21,6 +21,7 @@ custom_updater:
 
 | Name | Type | Requirement | Description
 | ---- | ---- | ------- | -----------
+| title | object | **Optional** | Change card title
 | entities | object | **Required** | List of github sensors
 
 <h2>Configuration</h2>
