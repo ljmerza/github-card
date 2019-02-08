@@ -12,7 +12,6 @@ class GithubCard extends LitElement {
 
   constructor() {
     super();
-
     this.githubBaseUrl = `https://github.com`;
   }
 
@@ -141,18 +140,21 @@ class GithubCard extends LitElement {
     `;
   }
 
+  /**
+   * open a link in github
+   * @param {string} link 
+   */
   openLink(link) {
     window.open(`${this.githubBaseUrl}/${link}`);
   }
 
+  /**
+   * get amtching issue sensors
+   */
   get issues(){
-    return this.config.entities.map(entity => this.hass.states[entity])
-  }
-
-  createHeader() {
-    return html`
-
-    `;
+    return this.config.entities
+      .map(entity => this.hass.states[entity])
+      .filter(issue => issue);
   }
 }
 
