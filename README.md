@@ -19,10 +19,10 @@ custom_updater:
 
 <h2>Options</h2>
 
-| Name | Type | Requirement | Description
+| Name | Type | Requirement | `Default` Description
 | ---- | ---- | ------- | -----------
-| title | object | **Optional** | Change card title
-| entities | object | **Required** | List of github sensors
+| title | string | **Optional** | `Github` Change card title
+| entities | list | **Required** | List of github sensors to display
 
 <h2>Configuration</h2>
 Go to your config directory and create a www folder. Inside the www run
