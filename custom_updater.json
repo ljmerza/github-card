@@ -1,0 +1,9 @@
+{
+  "github-card-": {
+    "updated_at": "08-02-2019",
+    "version": "1.0.0",
+    "remote_location": "https://raw.githubusercontent.com/ljmerza/lovelace-card-boilerplate/master/github-card.js",
+    "visit_repo": "https://github.com/ljmerza/github-card",
+    "changelog": "https://github.com/ljmerza/github-card/releases/latest"
+  }
+}
