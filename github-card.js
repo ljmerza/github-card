@@ -34,13 +34,13 @@ class GithubCard extends LitElement {
 
   static get styles() {
     return html`
-        ha-card {
+        .github-card {
           display: flex;
           padding: 0 16px 4px;
           flex-direction: column;
         }
 
-        .header {
+        .github-card .header {
           font-family: var(--paper-font-headline_-_font-family);
           -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
           font-size: var(--paper-font-headline_-_font-size);
@@ -52,25 +52,47 @@ class GithubCard extends LitElement {
           padding: 24px 0px 0px;    
         }
 
-        table {
-          border-spacing: 0;
+        .github-card__body {
           margin-bottom: 10px;
           margin-top: 10px;
-          display: flex;
         }
 
-        .issue td {
+        .github-card__body .issue {
+          display:flex;
           padding-top: 5px;
           padding-bottom: 5px;
+          display: flex;
+          justify-content: space-between;
         }
-        
-        .issue .overview > span {
-          padding-right: 5px;
+
+        .github-card__body .name .property {
+          flex-basis: 15%;
+          display:flex;
           cursor: pointer;
         }
 
-        .issue .overview ha-icon {
-          width: 1.2em;
+        .github-card__body .links {
+          padding-left: 5px;
+          flex-basis: 50%;
+          display:flex;
+          justify-content: space-evenly;
+        }
+        
+        .github-card__body .links .property {
+          display:flex;
+          flex-direction: column;
+        }
+
+        .github-card__body .links .property > span {
+          padding-bottom: 5px;
+        }
+        
+        .github-card__body .property > span {
+          padding-right: 10px;
+          cursor: pointer;
+        }
+
+        .github-card__body ha-icon {
           color: var(--primary-color);
         }
     `;
@@ -81,61 +103,62 @@ class GithubCard extends LitElement {
    * @return {TemplateResult}
    */
   render() {
-    console.log(this.issues);
 
     const github = this.issues.map(issue => {
       return html`
-        <tr class='issue'>
-          <td class="overview name">
-            <span @click=${e => this.openLink(`${issue.attributes.path}`)}  title='Open repository'>
+        <div class='issue'>
+          <div class="name">
+            <span class='property' @click=${e => this.openLink(`${issue.attributes.path}`)}  title='Open repository'>
               <ha-icon icon="${issue.attributes.icon}"></ha-icon>
               ${issue.attributes.path}
             </span>
-          </td>
+          </div>
 
-          <td class="overview">
-            <span @click=${e => this.openLink(`${issue.attributes.path}/issues`)} title='Open issues'>
-              <ha-icon icon="mdi:alert-circle-outline"></ha-icon>
-              <span>${issue.attributes.open_issues}</span>
-            </span>
+          <div class="links">
+            <div class='property'>
+              <span @click=${e => this.openLink(`${issue.attributes.path}/issues`)} title='Open issues'>
+                <ha-icon icon="mdi:alert-circle-outline"></ha-icon>
+                <span>${issue.attributes.open_issues}</span>
+              </span>
+              <span @click=${e => this.openLink(`${issue.attributes.path}/releases`)} title='Open releases'>
+                <ha-icon icon="mdi:tag-outline"></ha-icon>
+              </span>
+            </div>
 
-            <span @click=${e => this.openLink(`${issue.attributes.path}/pulls`)} title='Open pulls'>
-              <ha-icon icon="mdi:source-pull"></ha-icon>
-              <span>${issue.attributes.open_pull_requests}</span>
-            </span>
+            <div class='property'>
+              <span @click=${e => this.openLink(`${issue.attributes.path}/pulls`)} title='Open pulls'>
+                <ha-icon icon="mdi:source-pull"></ha-icon>
+                <span>${issue.attributes.open_pull_requests}</span>
+              </span>
+              <span @click=${e => this.openLink(`${issue.attributes.path}/network/members`)} title='Open forks'>
+                <ha-icon icon="mdi:source-fork"></ha-icon>
+              </span>
+            </div>
 
-            <span @click=${e => this.openLink(`${issue.attributes.path}/stargazers`)} title='Open stargazers'>
-              <ha-icon icon="mdi:star"></ha-icon>
-              <span>${issue.attributes.stargazers}</span>
-            </span>
+            <div class='property'>
+              <span @click=${e => this.openLink(`${issue.attributes.path}/stargazers`)} title='Open stargazers'>
+                <ha-icon icon="mdi:star"></ha-icon>
+                <span>${issue.attributes.stargazers}</span>
+              </span>
+              <span @click=${e => this.openLink(`${issue.attributes.path}/commits`)} title='Open commits'>
+                <ha-icon icon="mdi:clock-outline"></ha-icon>
+              </span>
+            </div>
 
-            <span @click=${e => this.openLink(`${issue.attributes.path}/releases`)} title='Open releases'>
-              <ha-icon icon="mdi:tag-outline"></ha-icon>
-            </span>
-
-            <span @click=${e => this.openLink(`${issue.attributes.path}/network/members`)} title='Open forks'>
-              <ha-icon icon="mdi:source-fork"></ha-icon>
-            </span>
-
-            <span @click=${e => this.openLink(`${issue.attributes.path}/commits`)} title='Open commits'>
-              <ha-icon icon="mdi:clock-outline"></ha-icon>
-            </span>
-          </td>
-        </tr>
+          </div>
+        </div>
       `;
     });
 
     return html`
-      <ha-card>
+      <ha-card class='github-card'>
         <style>${GithubCard.styles}</style>
         <div class='header'>
           ${this.config.title}
         </div>
-        <table>
-          <tbody>
-            ${github}
-          </tbody>
-        </table>
+        <div class='github-card__body'>
+          ${github}
+        </div>
       </ha-card>
     `;
   }

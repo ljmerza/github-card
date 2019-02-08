@@ -1,7 +1,7 @@
 <h1 align="center">Github Card for Home Assistant</h1>
 
 <p align="center">
-  <img src='https://i.imgur.com/r7z29br.png' />
+  <img src='https://i.imgur.com/uPgIqFl.png' />
 </p>
 
 
@@ -35,7 +35,7 @@ In your ui-lovelace.yaml
 
 ```yaml
 resources:
-  - url: /local/github-card/github-card.js?v=1.0.1
+  - url: /local/github-card/github-card.js?v=1.0.2
     type: js
 ```
 
