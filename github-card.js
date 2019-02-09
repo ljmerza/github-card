@@ -20,6 +20,7 @@ class GithubCard extends LitElement {
 
     this.config = {
       title: 'Github',
+      show_extended: true,
       ...config
     };
   }
@@ -59,28 +60,35 @@ class GithubCard extends LitElement {
 
         .github-card__body .issue {
           display:flex;
+          justify-content: space-between;
           padding-top: 5px;
           padding-bottom: 5px;
-          display: flex;
-          justify-content: space-between;
         }
 
         .github-card__body .name .property {
-          flex-basis: 15%;
           display:flex;
+          font-size: 1.1em;
           cursor: pointer;
         }
 
+        .github-card__body .issue-name {
+        	padding-left: 5px;
+        	font-size: 1.3em;
+        }
+
         .github-card__body .links {
-          padding-left: 5px;
-          flex-basis: 50%;
           display:flex;
           justify-content: space-evenly;
+          padding-left: 5px;
         }
         
         .github-card__body .links .property {
           display:flex;
           flex-direction: column;
+        }
+
+        .github-card__body .links .property .hidden {
+          display:none;
         }
 
         .github-card__body .links .property > span {
@@ -94,6 +102,7 @@ class GithubCard extends LitElement {
 
         .github-card__body ha-icon {
           color: var(--primary-color);
+          font-size: 1.2em;
         }
     `;
   }
@@ -110,9 +119,11 @@ class GithubCard extends LitElement {
           <div class="name">
             <span class='property' @click=${e => this.openLink(`${issue.attributes.path}`)}  title='Open repository'>
               <ha-icon icon="${issue.attributes.icon}"></ha-icon>
-              ${issue.attributes.path}
+              <span class='issue-name'>${issue.attributes.path}</span>
             </span>
           </div>
+
+          <div></div>
 
           <div class="links">
             <div class='property'>
@@ -120,7 +131,11 @@ class GithubCard extends LitElement {
                 <ha-icon icon="mdi:alert-circle-outline"></ha-icon>
                 <span>${issue.attributes.open_issues}</span>
               </span>
-              <span @click=${e => this.openLink(`${issue.attributes.path}/releases`)} title='Open releases'>
+              <span 
+              	class='${this.config.show_extended ? '' : 'hidden'}' 
+              	@click=${e => this.openLink(`${issue.attributes.path}/releases`)} 
+              	title='Open releases'
+              >
                 <ha-icon icon="mdi:tag-outline"></ha-icon>
               </span>
             </div>
@@ -130,7 +145,11 @@ class GithubCard extends LitElement {
                 <ha-icon icon="mdi:source-pull"></ha-icon>
                 <span>${issue.attributes.open_pull_requests}</span>
               </span>
-              <span @click=${e => this.openLink(`${issue.attributes.path}/network/members`)} title='Open forks'>
+              <span 
+              	class='${this.config.show_extended ? '' : 'hidden'}' 
+              	@click=${e => this.openLink(`${issue.attributes.path}/network/members`)} 
+              	title='Open forks'
+              >
                 <ha-icon icon="mdi:source-fork"></ha-icon>
               </span>
             </div>
@@ -140,7 +159,11 @@ class GithubCard extends LitElement {
                 <ha-icon icon="mdi:star"></ha-icon>
                 <span>${issue.attributes.stargazers}</span>
               </span>
-              <span @click=${e => this.openLink(`${issue.attributes.path}/commits`)} title='Open commits'>
+              <span 
+              	class='${this.config.show_extended ? '' : 'hidden'}' 
+              	@click=${e => this.openLink(`${issue.attributes.path}/commits`)} 
+              	title='Open commits'
+              >
                 <ha-icon icon="mdi:clock-outline"></ha-icon>
               </span>
             </div>

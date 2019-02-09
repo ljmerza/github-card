@@ -23,6 +23,7 @@ custom_updater:
 | ---- | ---- | ------- | -----------
 | title | string | **Optional** | `Github` Change card title
 | entities | list | **Required** | List of github sensors to display
+| show_extended | boolean | **Optional** | `true` Show/hide tags, forks, and commits links
 
 <h2>Configuration</h2>
 Go to your config directory and create a www folder. Inside the www run
@@ -35,7 +36,7 @@ In your ui-lovelace.yaml
 
 ```yaml
 resources:
-  - url: /local/github-card/github-card.js?v=1.0.2
+  - url: /local/github-card/github-card.js?v=1.1.0
     type: js
 ```
 
