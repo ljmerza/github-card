@@ -72,8 +72,8 @@ class GithubCard extends LitElement {
         }
 
         .github-card__body .issue-name {
-        	padding-left: 5px;
-        	font-size: 1.3em;
+          padding-left: 5px;
+        	padding-top: 2px;
         }
 
         .github-card__body .links {
