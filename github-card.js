@@ -30,7 +30,9 @@ class GithubCard extends LitElement {
    * @return {Number}
    */
   getCardSize() {
-    return 2;
+    const baseSize = 3.5;
+    const reposSize = this.config.entites * (this.config.show_extended ? 2 : 1);
+    return Math.round(baseSize * reposSize);
   }
 
   static get styles() {
