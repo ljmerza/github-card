@@ -36,7 +36,7 @@ In your ui-lovelace.yaml
 
 ```yaml
 resources:
-  - url: /local/github-card/github-card.js?v=1.1.2
+  - url: /local/github-card/github-card.js?v=1.1.3
     type: js
 ```
 
