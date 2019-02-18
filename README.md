@@ -36,8 +36,8 @@ In your ui-lovelace.yaml
 
 ```yaml
 resources:
-  - url: /local/github-card/github-card.js?v=1.1.3
-    type: js
+  - url: /local/github-card/github-card.js?v=1.2.0
+    type: module
 ```
 
 Add the custom card to views:
