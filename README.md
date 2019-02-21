@@ -26,17 +26,14 @@ custom_updater:
 | show_extended | boolean | **Optional** | `true` Show/hide tags, forks, and commits links
 
 <h2>Configuration</h2>
-Go to your config directory and create a www folder. Inside the www run
 
-```bash
-git clone https://github.com/ljmerza/github-card.git
-```
+Download `github-card.js` from the [latest release](https://github.com/ljmerza/github-card/releases/latest/) and upload it your /www folder of your Home Assistant config directory.
 
 In your ui-lovelace.yaml
 
 ```yaml
 resources:
-  - url: /local/github-card/github-card.js?v=1.2.0
+  - url: /local//github-card.js?v=1.2.0
     type: js
 ```
 
