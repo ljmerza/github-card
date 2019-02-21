@@ -1,7 +1,7 @@
 <h1 align="center">Github Card for Home Assistant</h1>
 
 <p align="center">
-  <img src='https://i.imgur.com/uPgIqFl.png' />
+  <img src='card.png' />
 </p>
 
 
