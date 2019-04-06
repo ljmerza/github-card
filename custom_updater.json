@@ -1,7 +1,7 @@
 {
   "github-card-": {
     "updated_at": "2019-04-06",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "remote_location": "https://raw.githubusercontent.com/ljmerza/github-card/master/github-card.js",
     "visit_repo": "https://github.com/ljmerza/github-card",
     "changelog": "https://github.com/ljmerza/github-card/releases/latest"
