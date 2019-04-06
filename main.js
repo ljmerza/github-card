@@ -50,7 +50,7 @@ class GithubCard extends LitElement {
           <div class="name">
             <span class='property' @click=${() => this.openLink(`${issue.attributes.path}`)}  title='Open repository'>
               <ha-icon icon="${issue.attributes.icon}"></ha-icon>
-              <span class='issue-name'>${issue.attributes.path}</span>
+              <span class='issue-name'>${issue.attributes.name}</span>
             </span>
           </div>
 
