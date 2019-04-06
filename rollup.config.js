@@ -1,5 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
-import { terser } from "rollup-plugin-terser";
+import { uglify } from "rollup-plugin-uglify";
+import babel from 'rollup-plugin-babel';
 
 export default {
     input: 'main.js',
@@ -9,6 +10,9 @@ export default {
     },
     plugins: [
         resolve(),
-        terser()
+        babel({
+            exclude: 'node_modules/**'
+        }),
+        uglify()
     ]
 };
