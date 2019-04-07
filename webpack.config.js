@@ -7,9 +7,9 @@ const presets = [
         {
             targets: {
                 edge: "17",
-                firefox: "60",
-                chrome: "67",
-                safari: "11.1",
+                firefox: "55",
+                chrome: "50",
+                safari: "10",
             }
         },
     ],
@@ -20,6 +20,7 @@ const plugins = [
 ];
 
 module.exports = {
+    mode: 'development',
     entry: {
         "github-card": './src/index.js',
         "github-card-editor": './src/index-editor.js'
@@ -29,7 +30,7 @@ module.exports = {
     ],
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'lib')
+        path: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [
