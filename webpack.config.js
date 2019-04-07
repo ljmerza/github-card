@@ -1,24 +1,6 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const presets = [
-    [
-        "@babel/env",
-        {
-            targets: {
-                edge: "17",
-                firefox: "55",
-                chrome: "50",
-                safari: "10",
-            }
-        },
-    ],
-];
-
-const plugins = [
-    "@babel/plugin-transform-modules-umd"
-];
-
 module.exports = {
     mode: 'development',
     entry: {
@@ -37,11 +19,18 @@ module.exports = {
             {
                 test: /\.m?js$/,
                 exclude: /(node_modules|bower_components)/,
+                include: [
+                    /node_modules(?:\/|\\)lit-element|lit-html/
+                ],
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets,
-                        plugins
+                        presets: [
+                            ["@babel/env"],
+                        ],
+                        plugins: [
+                            "@babel/plugin-transform-modules-umd"
+                        ]
                     }
                 }
             }   

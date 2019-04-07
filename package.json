@@ -36,7 +36,7 @@
     "scripts": {
         "build": "npm run lint && npm run webpack",
         "webpack": "npx webpack --config webpack.config.js",
-        "lint": "eslint main.js style.js",
+        "lint": "eslint ./src",
         "watch": "webpack --watch"
     }
 }

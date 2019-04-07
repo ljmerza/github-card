@@ -1,4 +1,4 @@
-import "@babel/polyfill";
+import '@babel/polyfill';
 
 import { LitElement, html } from 'lit-element';
 import style from './style';
@@ -15,6 +15,11 @@ class GithubCard extends LitElement {
   constructor() {
     super();
     this.githubBaseUrl = 'https://github.com';
+  }
+
+  static async getConfigElement() {
+    await import("./index-editor.js");
+    return document.createElement("github-card-editor");
   }
 
   setConfig(config) {

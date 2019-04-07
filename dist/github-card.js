@@ -1,6 +1,50 @@
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"github-card": 0
+/******/ 	};
+/******/
+/******/
+/******/
+/******/ 	// script path function
+/******/ 	function jsonpScriptSrc(chunkId) {
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".js"
+/******/ 	}
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -26,6 +70,64 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var promises = [];
+/******/
+/******/
+/******/ 		// JSONP chunk loading for javascript
+/******/
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
+/******/
+/******/ 			// a Promise means "currently loading".
+/******/ 			if(installedChunkData) {
+/******/ 				promises.push(installedChunkData[2]);
+/******/ 			} else {
+/******/ 				// setup Promise in chunk cache
+/******/ 				var promise = new Promise(function(resolve, reject) {
+/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 				});
+/******/ 				promises.push(installedChunkData[2] = promise);
+/******/
+/******/ 				// start chunk loading
+/******/ 				var script = document.createElement('script');
+/******/ 				var onScriptComplete;
+/******/
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.src = jsonpScriptSrc(chunkId);
+/******/
+/******/ 				onScriptComplete = function (event) {
+/******/ 					// avoid mem leaks in IE.
+/******/ 					script.onerror = script.onload = null;
+/******/ 					clearTimeout(timeout);
+/******/ 					var chunk = installedChunks[chunkId];
+/******/ 					if(chunk !== 0) {
+/******/ 						if(chunk) {
+/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 							var realSrc = event && event.target && event.target.src;
+/******/ 							var error = new Error('Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')');
+/******/ 							error.type = errorType;
+/******/ 							error.request = realSrc;
+/******/ 							chunk[1](error);
+/******/ 						}
+/******/ 						installedChunks[chunkId] = undefined;
+/******/ 					}
+/******/ 				};
+/******/ 				var timeout = setTimeout(function(){
+/******/ 					onScriptComplete({ type: 'timeout', target: script });
+/******/ 				}, 120000);
+/******/ 				script.onerror = script.onload = onScriptComplete;
+/******/ 				document.head.appendChild(script);
+/******/ 			}
+/******/ 		}
+/******/ 		return Promise.all(promises);
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -78,6 +180,16 @@
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -3582,7 +3694,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!*************************************************!*\
   !*** ./node_modules/lit-element/lit-element.js ***!
   \*************************************************/
-/*! exports provided: html, svg, TemplateResult, SVGTemplateResult, LitElement, defaultConverter, notEqual, UpdatingElement, customElement, property, query, queryAll, eventOptions, supportsAdoptingStyleSheets, CSSResult, unsafeCSS, css */
+/*! exports provided: defaultConverter, notEqual, UpdatingElement, customElement, property, query, queryAll, eventOptions, html, svg, TemplateResult, SVGTemplateResult, supportsAdoptingStyleSheets, CSSResult, unsafeCSS, css, LitElement */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3761,10 +3873,11 @@ eval("/**\n * Copyright (c) 2014-present, Facebook, Inc.\n *\n * This source cod
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {\n  if (true) {\n    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! @babel/polyfill */ \"./node_modules/@babel/polyfill/lib/index.js\"), __webpack_require__(/*! lit-element */ \"./node_modules/lit-element/lit-element.js\"), __webpack_require__(/*! ./style */ \"./src/style.js\")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?\n\t\t\t\t(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\n  } else { var mod; }\n})(this, function (_polyfill, _litElement, _style) {\n  \"use strict\";\n\n  _style = _interopRequireDefault(_style);\n\n  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n  function _templateObject2() {\n    var data = _taggedTemplateLiteral([\"\\n      <ha-card class='github-card'>\\n        <style>\", \"</style>\\n        <div class='header'>\\n          \", \"\\n        </div>\\n        <div class='github-card__body'>\\n          \", \"\\n        </div>\\n      </ha-card>\\n    \"]);\n\n    _templateObject2 = function _templateObject2() {\n      return data;\n    };\n\n    return data;\n  }\n\n  function _templateObject() {\n    var data = _taggedTemplateLiteral([\"\\n        <div class='issue'>\\n          <div class=\\\"name\\\">\\n            <span class='property' @click=\", \"  title='Open repository'>\\n              <ha-icon icon=\\\"\", \"\\\"></ha-icon>\\n              <span class='issue-name'>\", \"</span>\\n            </span>\\n          </div>\\n\\n          <div></div>\\n\\n          <div class=\\\"links\\\">\\n            <div class='property'>\\n              <span @click=\", \" title='Open issues'>\\n                <ha-icon icon=\\\"mdi:alert-circle-outline\\\"></ha-icon>\\n                <span>\", \"</span>\\n              </span>\\n              <span \\n                class='\", \"' \\n                @click=\", \" \\n                title='Open releases'\\n              >\\n                <ha-icon icon=\\\"mdi:tag-outline\\\"></ha-icon>\\n              </span>\\n            </div>\\n\\n            <div class='property'>\\n              <span @click=\", \" title='Open pulls'>\\n                <ha-icon icon=\\\"mdi:source-pull\\\"></ha-icon>\\n                <span>\", \"</span>\\n              </span>\\n              <span \\n                class='\", \"' \\n                @click=\", \" \\n                title='Open forks'\\n              >\\n                <ha-icon icon=\\\"mdi:source-fork\\\"></ha-icon>\\n              </span>\\n            </div>\\n\\n            <div class='property'>\\n              <span @click=\", \" title='Open stargazers'>\\n                <ha-icon icon=\\\"mdi:star\\\"></ha-icon>\\n                <span>\", \"</span>\\n              </span>\\n              <span \\n                class='\", \"' \\n                @click=\", \" \\n                title='Open commits'\\n              >\\n                <ha-icon icon=\\\"mdi:clock-outline\\\"></ha-icon>\\n              </span>\\n            </div>\\n\\n          </div>\\n        </div>\\n      \"]);\n\n    _templateObject = function _templateObject() {\n      return data;\n    };\n\n    return data;\n  }\n\n  function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }\n\n  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }\n\n  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\n  class GithubCard extends _litElement.LitElement {\n    static get properties() {\n      return {\n        hass: Object,\n        config: Object\n      };\n    }\n\n    constructor() {\n      super();\n      this.githubBaseUrl = 'https://github.com';\n    }\n\n    setConfig(config) {\n      if (!config.entities) throw Error('entities required.');\n      this.config = _objectSpread({\n        title: 'Github',\n        show_extended: true\n      }, config);\n    }\n    /**\n     * get the current size of the card\n     * @return {Number}\n     */\n\n\n    getCardSize() {\n      var baseSize = 3.5;\n      var reposSize = this.config.entites * (this.config.show_extended ? 2 : 1);\n      return Math.round(baseSize * reposSize);\n    }\n\n    static get styles() {\n      return _style.default;\n    }\n    /**\n     * generates the card HTML\n     * @return {TemplateResult}\n     */\n\n\n    render() {\n      var github = this.issues.map(issue => (0, _litElement.html)(_templateObject(), () => this.openLink(\"\".concat(issue.attributes.path)), issue.attributes.icon, issue.attributes.name, () => this.openLink(\"\".concat(issue.attributes.path, \"/issues\")), issue.attributes.open_issues, this.config.show_extended ? '' : 'hidden', () => this.openLink(\"\".concat(issue.attributes.path, \"/releases\")), () => this.openLink(\"\".concat(issue.attributes.path, \"/pulls\")), issue.attributes.open_pull_requests, this.config.show_extended ? '' : 'hidden', () => this.openLink(\"\".concat(issue.attributes.path, \"/network/members\")), () => this.openLink(\"\".concat(issue.attributes.path, \"/stargazers\")), issue.attributes.stargazers, this.config.show_extended ? '' : 'hidden', () => this.openLink(\"\".concat(issue.attributes.path, \"/commits\"))));\n      return (0, _litElement.html)(_templateObject2(), GithubCard.styles, this.config.title, github);\n    }\n    /**\n     * open a link in github\n     * @param {string} link\n     */\n\n\n    openLink(link) {\n      window.open(\"\".concat(this.githubBaseUrl, \"/\").concat(link));\n    }\n    /**\n     * get amtching issue sensors\n     */\n\n\n    get issues() {\n      return this.config.entities.map(entity => this.hass.states[entity]).filter(issue => issue);\n    }\n\n  }\n\n  customElements.define('github-card', GithubCard);\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/polyfill */ \"./node_modules/@babel/polyfill/lib/index.js\");\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_polyfill__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit-element */ \"./node_modules/lit-element/lit-element.js\");\n/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style */ \"./src/style.js\");\n\n\n\n\n\n\nclass GithubCard extends lit_element__WEBPACK_IMPORTED_MODULE_1__[\"LitElement\"] {\n  static get properties() {\n    return {\n      hass: Object,\n      config: Object,\n    };\n  }\n\n  constructor() {\n    super();\n    this.githubBaseUrl = 'https://github.com';\n  }\n\n  static async getConfigElement() {\n    await __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./index-editor.js */ \"./src/index-editor.js\"));\n    return document.createElement(\"github-card-editor\");\n  }\n\n  setConfig(config) {\n    if (!config.entities) throw Error('entities required.');\n\n    this.config = {\n      title: 'Github',\n      show_extended: true,\n      ...config,\n    };\n  }\n\n  /**\n   * get the current size of the card\n   * @return {Number}\n   */\n  getCardSize() {\n    const baseSize = 3.5;\n    const reposSize = this.config.entites * (this.config.show_extended ? 2 : 1);\n    return Math.round(baseSize * reposSize);\n  }\n\n  static get styles() {\n    return _style__WEBPACK_IMPORTED_MODULE_2__[\"default\"];\n  }\n\n  /**\n   * generates the card HTML\n   * @return {TemplateResult}\n   */\n  render() {\n    const github = this.issues.map(issue => lit_element__WEBPACK_IMPORTED_MODULE_1__[\"html\"]`\n        <div class='issue'>\n          <div class=\"name\">\n            <span class='property' @click=${() => this.openLink(`${issue.attributes.path}`)}  title='Open repository'>\n              <ha-icon icon=\"${issue.attributes.icon}\"></ha-icon>\n              <span class='issue-name'>${issue.attributes.name}</span>\n            </span>\n          </div>\n\n          <div></div>\n\n          <div class=\"links\">\n            <div class='property'>\n              <span @click=${() => this.openLink(`${issue.attributes.path}/issues`)} title='Open issues'>\n                <ha-icon icon=\"mdi:alert-circle-outline\"></ha-icon>\n                <span>${issue.attributes.open_issues}</span>\n              </span>\n              <span \n                class='${this.config.show_extended ? '' : 'hidden'}' \n                @click=${() => this.openLink(`${issue.attributes.path}/releases`)} \n                title='Open releases'\n              >\n                <ha-icon icon=\"mdi:tag-outline\"></ha-icon>\n              </span>\n            </div>\n\n            <div class='property'>\n              <span @click=${() => this.openLink(`${issue.attributes.path}/pulls`)} title='Open pulls'>\n                <ha-icon icon=\"mdi:source-pull\"></ha-icon>\n                <span>${issue.attributes.open_pull_requests}</span>\n              </span>\n              <span \n                class='${this.config.show_extended ? '' : 'hidden'}' \n                @click=${() => this.openLink(`${issue.attributes.path}/network/members`)} \n                title='Open forks'\n              >\n                <ha-icon icon=\"mdi:source-fork\"></ha-icon>\n              </span>\n            </div>\n\n            <div class='property'>\n              <span @click=${() => this.openLink(`${issue.attributes.path}/stargazers`)} title='Open stargazers'>\n                <ha-icon icon=\"mdi:star\"></ha-icon>\n                <span>${issue.attributes.stargazers}</span>\n              </span>\n              <span \n                class='${this.config.show_extended ? '' : 'hidden'}' \n                @click=${() => this.openLink(`${issue.attributes.path}/commits`)} \n                title='Open commits'\n              >\n                <ha-icon icon=\"mdi:clock-outline\"></ha-icon>\n              </span>\n            </div>\n\n          </div>\n        </div>\n      `);\n\n    return lit_element__WEBPACK_IMPORTED_MODULE_1__[\"html\"]`\n      <ha-card class='github-card'>\n        <style>${GithubCard.styles}</style>\n        <div class='header'>\n          ${this.config.title}\n        </div>\n        <div class='github-card__body'>\n          ${github}\n        </div>\n      </ha-card>\n    `;\n  }\n\n  /**\n   * open a link in github\n   * @param {string} link\n   */\n  openLink(link) {\n    window.open(`${this.githubBaseUrl}/${link}`);\n  }\n\n  /**\n   * get amtching issue sensors\n   */\n  get issues() {\n    return this.config.entities\n      .map(entity => this.hass.states[entity])\n      .filter(issue => issue);\n  }\n}\n\ncustomElements.define('github-card', GithubCard);\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -3772,10 +3885,11 @@ eval("var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPAC
 /*!**********************!*\
   !*** ./src/style.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {\n  if (true) {\n    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! lit-element */ \"./node_modules/lit-element/lit-element.js\")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?\n\t\t\t\t(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\n  } else { var mod; }\n})(this, function (_exports, _litElement) {\n  \"use strict\";\n\n  Object.defineProperty(_exports, \"__esModule\", {\n    value: true\n  });\n  _exports.default = void 0;\n\n  function _templateObject() {\n    var data = _taggedTemplateLiteral([\"\\n    .github-card {\\n        display: flex;\\n        padding: 0 16px 4px;\\n        flex-direction: column;\\n    }\\n\\n    .github-card .header {\\n        font-family: var(--paper-font-headline_-_font-family);\\n        -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);\\n        font-size: var(--paper-font-headline_-_font-size);\\n        font-weight: var(--paper-font-headline_-_font-weight);\\n        letter-spacing: var(--paper-font-headline_-_letter-spacing);\\n        line-height: var(--paper-font-headline_-_line-height);\\n        text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);\\n        opacity: var(--dark-primary-opacity);\\n        padding: 24px 0px 0px;    \\n    }\\n\\n    .github-card__body {\\n        margin-bottom: 10px;\\n        margin-top: 10px;\\n    }\\n\\n    .github-card__body .issue {\\n        display:flex;\\n        justify-content: space-between;\\n        padding-top: 5px;\\n        padding-bottom: 5px;\\n    }\\n    \\n    .github-card__body .issue .name {\\n        min-width: 40%;\\n        word-break: break-all;\\n    }\\n\\n    .github-card__body .issue .name .property {\\n        display:flex;\\n        font-size: 1.1em;\\n        cursor: pointer;\\n    }\\n\\n    .github-card__body .issue .name .property .issue-name {\\n        padding-left: 5px;\\n        padding-top: 2px;\\n    }\\n\\n    .github-card__body .issue .links {\\n        display:flex;\\n        justify-content: flex-end;\\n        padding-left: 5px;\\n        min-width: 50%;\\n        max-width: 200px;\\n    }\\n    \\n    .github-card__body .links .property {\\n        display:flex;\\n        cursor: pointer;\\n        flex-direction: column;\\n        padding-right: 5px;\\n    }\\n\\n    .github-card__body .links .property:last-child {\\n        padding-right: 0px;\\n    }\\n\\n    .github-card__body .links .property .hidden {\\n        display:none;\\n    }\\n\\n    .github-card__body .links .property > span {\\n        padding-bottom: 5px;\\n    }\\n\\n    .github-card__body ha-icon {\\n        color: var(--primary-color);\\n        font-size: 1.2em;\\n    }\\n\"]);\n\n    _templateObject = function _templateObject() {\n      return data;\n    };\n\n    return data;\n  }\n\n  function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }\n\n  var style = (0, _litElement.css)(_templateObject());\n  var _default = style;\n  _exports.default = _default;\n});\n\n//# sourceURL=webpack:///./src/style.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ \"./node_modules/lit-element/lit-element.js\");\n\n\nconst style = lit_element__WEBPACK_IMPORTED_MODULE_0__[\"css\"]`\n    .github-card {\n        display: flex;\n        padding: 0 16px 4px;\n        flex-direction: column;\n    }\n\n    .github-card .header {\n        font-family: var(--paper-font-headline_-_font-family);\n        -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);\n        font-size: var(--paper-font-headline_-_font-size);\n        font-weight: var(--paper-font-headline_-_font-weight);\n        letter-spacing: var(--paper-font-headline_-_letter-spacing);\n        line-height: var(--paper-font-headline_-_line-height);\n        text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);\n        opacity: var(--dark-primary-opacity);\n        padding: 24px 0px 0px;    \n    }\n\n    .github-card__body {\n        margin-bottom: 10px;\n        margin-top: 10px;\n    }\n\n    .github-card__body .issue {\n        display:flex;\n        justify-content: space-between;\n        padding-top: 5px;\n        padding-bottom: 5px;\n    }\n    \n    .github-card__body .issue .name {\n        min-width: 40%;\n        word-break: break-all;\n    }\n\n    .github-card__body .issue .name .property {\n        display:flex;\n        font-size: 1.1em;\n        cursor: pointer;\n    }\n\n    .github-card__body .issue .name .property .issue-name {\n        padding-left: 5px;\n        padding-top: 2px;\n    }\n\n    .github-card__body .issue .links {\n        display:flex;\n        justify-content: flex-end;\n        padding-left: 5px;\n        min-width: 50%;\n        max-width: 200px;\n    }\n    \n    .github-card__body .links .property {\n        display:flex;\n        cursor: pointer;\n        flex-direction: column;\n        padding-right: 5px;\n    }\n\n    .github-card__body .links .property:last-child {\n        padding-right: 0px;\n    }\n\n    .github-card__body .links .property .hidden {\n        display:none;\n    }\n\n    .github-card__body .links .property > span {\n        padding-bottom: 5px;\n    }\n\n    .github-card__body ha-icon {\n        color: var(--primary-color);\n        font-size: 1.2em;\n    }\n`;\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (style);\n\n\n//# sourceURL=webpack:///./src/style.js?");
 
 /***/ })
 
