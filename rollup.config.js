@@ -3,16 +3,14 @@ import { uglify } from "rollup-plugin-uglify";
 import babel from 'rollup-plugin-babel';
 
 export default {
-    input: 'main.js',
+    input: ['src/index.js', 'src/index-editor.js'],
     output: {
-        file: 'github-card.js',
+        folder: 'dist',
         format: 'umd'
     },
     plugins: [
-        resolve(),
-        babel({
-            exclude: 'node_modules/**'
-        }),
-        uglify()
+        // resolve(),
+        babel(),
+        // uglify()
     ]
 };

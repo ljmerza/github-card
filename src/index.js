@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 
 import { LitElement, html } from 'lit-element';
 import style from './style';
