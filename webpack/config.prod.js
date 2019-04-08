@@ -8,4 +8,7 @@ module.exports = merge(commonConfig, {
     optimization: {
         minimize: true
     },
+    output: {
+        publicPath: '/local/'
+    },
 });
