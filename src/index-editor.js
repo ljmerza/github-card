@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lit-element';
+import style from './style-editor';
 
 
 const fireEvent = (node, type, detail = {}, options = {}) => {
@@ -14,29 +15,36 @@ const fireEvent = (node, type, detail = {}, options = {}) => {
 };
 
 
-export default class RokuCardEditor extends LitElement {
-  setConfig(config) {
-    this._config = config;
+export default class GithubCardEditor extends LitElement {
+  static get styles() {
+    return style;
   }
 
   static get properties() {
     return { hass: {}, _config: {} };
   }
 
-  get _name() {
-    return this._config.name || '';
+  setConfig(config) {
+    this._config = config;
   }
 
-  get _entity() {
-    return this._config.entity || '';
+  get entityOptions() {
+    // get all github entities
+    const entities = Object.keys(this.hass.states).filter(eid => {
+      if(eid.substr(0, eid.indexOf('.')) !== 'sensor') return false;
+
+      const entity = this.hass.states[eid];
+      if (!entity.attributes || !entity.attributes.icon || !entity.attributes.icon.includes('github')) return false;
+
+      return true;
+    });
+
+    // convert to checkbox objects
+    return entities.map(eid => ({ name: eid, checked: this._config.entities.includes(eid) }));
   }
 
-  get _remote() {
-    return this._config.remote || '';
-  }
-
-  get _theme() {
-    return this._config.theme;
+  firstUpdated(){
+    this._firstRendered = true;
   }
 
   render() {
@@ -44,43 +52,57 @@ export default class RokuCardEditor extends LitElement {
       return html``;
     }
 
-    const themes = ['Backend-selected', 'default'].concat(
-      Object.keys(this.hass.themes.themes).sort(),
-    );
-
-    const entities = Object.keys(this.hass.states).filter(
-      eid => eid.substr(0, eid.indexOf('.')) === 'github',
-    );
-
     return html`
-      ${themes}
-      ${entities}
+      <div class="card-config">
+
+        <div class=overall-config'>
+          <paper-input
+            label="Title (Optional)"
+            .value="${this._config.title}"
+            .configValue="${"title"}"
+            @value-changed="${this._valueChanged}"
+          ></paper-input>
+          <paper-checkbox
+            @checked-changed="${this._valueChanged}" 
+            .checked=${this._config.show_extended}
+            .configValue="${"show_extended"}"
+          >Show Extended</paper-checkbox>
+        </div>
+
+        <div class='entities'>
+          <h3>Entities</h3>
+          ${
+            this.entityOptions.map(entity => {
+              return html`<paper-checkbox 
+                @checked-changed="${this._valueChanged}" 
+                .checked=${entity.checked}
+                .entityValue="${entity.name}"
+              >${entity.name}</paper-checkbox>`;
+            })
+          }
+        </div>
+      </div>
     `;
   }
 
   _valueChanged(ev) {
-    if (!this._config || !this.hass) {
-      return;
-    }
+    if (!this._config || !this.hass || !this._firstRendered) return;
 
-    const { target } = ev;
-    if (this[`_${target.configValue}`] === target.value) {
-      return;
-    }
+    const { target: { configValue, value, entityValue }, detail: { value: checkedValue} } = ev;
 
-    if (target.configValue) {
-      if (target.value === '') {
-        delete this._config[target.configValue];
-      } else {
-        this._config = {
-          ...this._config,
-          [target.configValue]: target.checked !== undefined ? target.checked : target.value,
-        };
-      }
+    if (entityValue){
+      if (checkedValue) this._config.entities.push(entityValue);
+      else this._config.entities = this._config.entities.filter(entity => entity !== entityValue);
+
+    } else if (checkedValue !== undefined || checkedValue !== null){
+      this._config = { ...this._config, [configValue]: checkedValue };
+
+    } else {
+      this._config = { ...this._config, [configValue]: value };
     }
 
     fireEvent(this, 'config-changed', { config: this._config });
   }
 }
 
-customElements.define('github-card-editor', RokuCardEditor);
+customElements.define('github-card-editor', GithubCardEditor);
