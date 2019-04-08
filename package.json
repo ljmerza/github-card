@@ -26,17 +26,19 @@
         "@babel/plugin-transform-modules-umd": "^7.2.0",
         "@babel/preset-env": "^7.4.3",
         "babel-loader": "^8.0.5",
-        "clean-webpack-plugin": "^2.0.1",
         "eslint": "^5.13.0",
         "eslint-config-airbnb-base": "^13.1.0",
         "eslint-plugin-import": "^2.16.0",
         "webpack": "^4.29.6",
-        "webpack-cli": "^3.3.0"
+        "webpack-cli": "^3.3.0",
+        "webpack-merge": "^4.2.1"
     },
     "scripts": {
-        "build": "npm run lint && npm run webpack",
         "webpack": "npx webpack --config webpack.config.js",
         "lint": "eslint ./src",
-        "watch": "webpack --watch"
+        "start": "webpack --watch --config webpack/webpack.dev.js",
+        "build": "npm run lint && npm run build:prod && npm run build:prodbabel",
+        "build:prod": "npm run webpack --config webpack/webpack.prod.js",
+        "build:prodbabel": "npm run webpack --config webpack/webpack.prod-babel.js"
     }
 }
