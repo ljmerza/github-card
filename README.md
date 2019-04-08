@@ -53,7 +53,7 @@ views:
 
 Enjoy my card? Help me out for a couple of :beers: or a :coffee:!
 
-[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](buymeacoff.ee/JMISm06AD)
+[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/JMISm06AD)
 
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/ljmerza/github-card.svg?style=for-the-badge
