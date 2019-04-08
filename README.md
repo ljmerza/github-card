@@ -56,7 +56,7 @@ Enjoy my card? Help me out for a couple of :beers: or a :coffee:!
 [![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/JMISm06AD)
 
 
-[commits-shield]: https://img.shields.io/github/commit-activity/ljmerza/github-card.svg?style=for-the-badge
+[commits-shield]: https://img.shields.io/github/commit-activity/y/ljmerza/github-card.svg?style=for-the-badge
 [commits]: https://github.com/ljmerza/github-card/commits/master
 [license-shield]: https://img.shields.io/github/license/ljmerza/github-card.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-Leonardo%20Merza%20%40ljmerza-blue.svg?style=for-the-badge
