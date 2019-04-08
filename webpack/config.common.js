@@ -1,9 +1,17 @@
-const merge = require('webpack-merge');
-
-const commonConfig = require('./webpack.common');
+const path = require('path');
 
 
-module.exports = merge(commonConfig, {
+const rootPath = path.resolve(__dirname, '../');
+
+module.exports = {
+    entry: {
+        "github-card": path.resolve(rootPath, './src/index.js'),
+    },
+    output: {
+        filename: '[name].js',
+        path: rootPath,
+        publicPath: '/local/github-card/'
+    },
     module: {
         rules: [
             {
@@ -26,4 +34,4 @@ module.exports = merge(commonConfig, {
             }
         ]
     }
-});
+};

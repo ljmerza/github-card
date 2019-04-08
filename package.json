@@ -34,11 +34,8 @@
         "webpack-merge": "^4.2.1"
     },
     "scripts": {
-        "webpack": "npx webpack --config webpack.config.js",
         "lint": "eslint ./src",
-        "start": "webpack --watch --config webpack/webpack.dev.js",
-        "build": "npm run lint && npm run build:prod && npm run build:prodbabel",
-        "build:prod": "npm run webpack --config webpack/webpack.prod.js",
-        "build:prodbabel": "npm run webpack --config webpack/webpack.prod-babel.js"
+        "start": "webpack --watch --config webpack/config.dev.js",
+        "build": "webpack --config webpack/config.prod.js"
     }
 }
