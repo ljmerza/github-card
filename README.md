@@ -4,8 +4,18 @@
   <img src='card.png' />
 </p>
 
+[![GitHub Release][releases-shield]][releases]
+[![License][license-shield]](LICENSE.md)
 
-<h2>Track Updates</h2>
+![Project Maintenance][maintenance-shield]
+[![GitHub Activity][commits-shield]][commits]
+
+## Support
+Enjoy my card? Help me out for a couple of :beers: or a :coffee:!
+
+[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](buymeacoff.ee/JMISm06AD)
+
+## Track Updates
 
 This custom card can be tracked with the help of [custom-updater](https://github.com/custom-components/custom_updater).
 
@@ -17,7 +27,7 @@ custom_updater:
     - https://raw.githubusercontent.com/ljmerza/github-card/master/custom_updater.json
 ```
 
-<h2>Options</h2>
+## Options
 
 | Name | Type | Requirement | `Default` Description
 | ---- | ---- | ------- | -----------
@@ -25,7 +35,7 @@ custom_updater:
 | entities | list | **Required** | List of github sensors to display
 | show_extended | boolean | **Optional** | `true` Show/hide tags, forks, and commits links
 
-<h2>Configuration</h2>
+## Configuration
 
 Download `github-card.js` from the [latest release](https://github.com/ljmerza/github-card/releases/latest/) and upload it your /www folder of your Home Assistant config directory.
 

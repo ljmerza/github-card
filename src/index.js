@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 
 import { LitElement, html } from 'lit-element';
 import style from './style';
@@ -14,6 +15,11 @@ class GithubCard extends LitElement {
   constructor() {
     super();
     this.githubBaseUrl = 'https://github.com';
+  }
+
+  static async getConfigElement() {
+    await import(/* webpackChunkName: "github-card-editor" */"./index-editor");
+    return document.createElement("github-card-editor");
   }
 
   setConfig(config) {
@@ -72,7 +78,7 @@ class GithubCard extends LitElement {
             </div>
 
             <div class='property'>
-              <span @click=${() => this.openLink(`${issue.attributes.path}/pulls`)} title='Open pulls'>
+              <span @click=${() => this.openLink(`${issue.attributes.path}/pulls`)} title='Open pull requests'>
                 <ha-icon icon="mdi:source-pull"></ha-icon>
                 <span>${issue.attributes.open_pull_requests}</span>
               </span>
