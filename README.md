@@ -1,8 +1,6 @@
-<h1 align="center">Github Card for Home Assistant</h1>
+# Github Card for Home Assistant
 
-<p align="center">
-  <img src='card.png' />
-</p>
+<img src='card.png' />
 
 [![GitHub Release][releases-shield]][releases]
 [![License][license-shield]](LICENSE.md)
