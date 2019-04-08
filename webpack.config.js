@@ -5,14 +5,14 @@ module.exports = {
     mode: 'development',
     entry: {
         "github-card": './src/index.js',
-        "github-card-editor": './src/index-editor.js'
     },
     plugins: [
         new CleanWebpackPlugin()  
     ],
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname),
+        publicPath: '/local/github-card/'
     },
     module: {
         rules: [

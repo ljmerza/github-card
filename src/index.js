@@ -18,7 +18,7 @@ class GithubCard extends LitElement {
   }
 
   static async getConfigElement() {
-    await import("./index-editor.js");
+    await import(/* webpackChunkName: "github-card-editor" */"./index-editor");
     return document.createElement("github-card-editor");
   }
 
