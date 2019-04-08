@@ -78,7 +78,7 @@ class GithubCard extends LitElement {
             </div>
 
             <div class='property'>
-              <span @click=${() => this.openLink(`${issue.attributes.path}/pulls`)} title='Open pulls'>
+              <span @click=${() => this.openLink(`${issue.attributes.path}/pulls`)} title='Open pull requests'>
                 <ha-icon icon="mdi:source-pull"></ha-icon>
                 <span>${issue.attributes.open_pull_requests}</span>
               </span>
