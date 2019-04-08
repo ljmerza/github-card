@@ -105,4 +105,3 @@ export default class GithubCardEditor extends LitElement {
   }
 }
 
-customElements.define('github-card-editor', GithubCardEditor);

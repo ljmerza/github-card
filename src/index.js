@@ -3,6 +3,9 @@ import '@babel/polyfill';
 import { LitElement, html } from 'lit-element';
 import style from './style';
 
+import GithubCardEditor from './index-editor';
+customElements.define('github-card-editor', GithubCardEditor);
+
 
 class GithubCard extends LitElement {
   static get properties() {
@@ -18,7 +21,6 @@ class GithubCard extends LitElement {
   }
 
   static async getConfigElement() {
-    await import(/* webpackChunkName: "github-card-editor" */"./index-editor");
     return document.createElement("github-card-editor");
   }
 
