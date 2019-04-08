@@ -10,11 +10,6 @@
 ![Project Maintenance][maintenance-shield]
 [![GitHub Activity][commits-shield]][commits]
 
-## Support
-Enjoy my card? Help me out for a couple of :beers: or a :coffee:!
-
-[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](buymeacoff.ee/JMISm06AD)
-
 ## Track Updates
 
 This custom card can be tracked with the help of [custom-updater](https://github.com/custom-components/custom_updater).
@@ -57,3 +52,15 @@ views:
     - sensor.waze_card
     - sensor.light_entity_card
 ```
+
+Enjoy my card? Help me out for a couple of :beers: or a :coffee:!
+
+[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](buymeacoff.ee/JMISm06AD)
+
+
+[commits-shield]: https://img.shields.io/github/commit-activity/y/ljmerza/github-card.svg?style=for-the-badge
+[commits]: https://github.com/ljmerza/github-card/commits/master
+[license-shield]: https://img.shields.io/github/license/ljmerza/github-card.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Leonardo%20Merza%20%40ljmerza-blue.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/ljmerza/github-card.svg?style=for-the-badge
+[releases]: https://github.com/ljmerza/github-card/releases
