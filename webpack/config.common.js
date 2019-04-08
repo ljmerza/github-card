@@ -9,8 +9,7 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: rootPath,
-        publicPath: '/local/github-card/'
+        path: rootPath
     },
     module: {
         rules: [
