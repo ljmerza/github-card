@@ -26,7 +26,6 @@ class GithubCard extends LitElement {
 
   setConfig(config) {
     if (!config.entities) throw Error('entities required.');
-    console.log({ config33: config });
     
     this.config = {
       title: 'Github',

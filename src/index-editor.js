@@ -91,8 +91,13 @@ export default class GithubCardEditor extends LitElement {
     const { target: { configValue, value, entityValue }, detail: { value: checkedValue} } = ev;
 
     if (entityValue){
-      if (checkedValue) this._config.entities.push(entityValue);
-      else this._config.entities = this._config.entities.filter(entity => entity !== entityValue);
+
+      if (checkedValue) {
+        this._config = { ...this._config, entities: [...this._config.entities, entityValue] };
+      } else {
+        const newEntities = this._config.entities.filter(entity => entity !== entityValue);
+        this._config = { ...this._config, entities: newEntities };
+      }
 
     } else if (checkedValue !== undefined || checkedValue !== null){
       this._config = { ...this._config, [configValue]: checkedValue };
@@ -101,6 +106,7 @@ export default class GithubCardEditor extends LitElement {
       this._config = { ...this._config, [configValue]: value };
     }
 
+    console.log(this._config);
     fireEvent(this, 'config-changed', { config: this._config });
   }
 }
