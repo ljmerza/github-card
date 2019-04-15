@@ -27,6 +27,7 @@ custom_updater:
 | title | string | **Optional** | `Github` Change card title
 | entities | list | **Required** | List of github sensors to display
 | show_extended | boolean | **Optional** | `true` Show/hide tags, forks, and commits links
+| show_github_icon | boolean | **Optional** | `true` Show/hide Github icon
 
 ## Configuration
 

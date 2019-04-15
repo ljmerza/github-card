@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit-element';
 import style from './style-editor';
-
+import configDefaults from './defaults';
 
 const fireEvent = (node, type, detail = {}, options = {}) => {
   const event = new Event(type, {
@@ -25,7 +25,7 @@ export default class GithubCardEditor extends LitElement {
   }
 
   setConfig(config) {
-    this._config = config;
+    this._config = {...configDefaults, ...config};
   }
 
   get entityOptions() {
@@ -62,11 +62,20 @@ export default class GithubCardEditor extends LitElement {
             .configValue="${"title"}"
             @value-changed="${this._valueChanged}"
           ></paper-input>
-          <paper-checkbox
-            @checked-changed="${this._valueChanged}" 
-            .checked=${this._config.show_extended}
-            .configValue="${"show_extended"}"
-          >Show Extended</paper-checkbox>
+
+          <div class='checkbox-options'>
+            <paper-checkbox
+              @checked-changed="${this._valueChanged}" 
+              .checked=${this._config.show_extended}
+              .configValue="${"show_extended"}"
+            >Show Extended</paper-checkbox>
+            <paper-checkbox
+              @checked-changed="${this._valueChanged}" 
+              .checked=${this._config.show_github_icon}
+              .configValue="${"show_github_icon"}"
+            >Show Github Icon</paper-checkbox>
+          </div>
+          
         </div>
 
         <div class='entities'>

@@ -5,6 +5,18 @@ const style = css`
         padding-top: 20px;
     }
 
+    .checkbox-options:first-of-type {
+        margin-top: 10px;
+    }
+    .checkbox-options:last-of-type {
+        margin-bottom: 10px;
+    }
+
+    .checkbox-options paper-checkbox {
+        margin-top: 5px;
+        width: 50%;
+    }
+
     .entities paper-checkbox {
         display: block;
         margin-bottom: 10px;

@@ -1,7 +1,6 @@
-import '@babel/polyfill';
-
 import { LitElement, html } from 'lit-element';
 import style from './style';
+import configDefaults from './defaults';
 
 import GithubCardEditor from './index-editor';
 customElements.define('github-card-editor', GithubCardEditor);
@@ -26,12 +25,7 @@ class GithubCard extends LitElement {
 
   setConfig(config) {
     if (!config.entities) throw Error('entities required.');
-    
-    this.config = {
-      title: 'Github',
-      show_extended: true,
-      ...config,
-    };
+    this.config = { ...configDefaults, ...config };
   }
 
   /**
@@ -53,11 +47,26 @@ class GithubCard extends LitElement {
    * @return {TemplateResult}
    */
   render() {
-    const github = this.issues.map(issue => html`
+    const github = this.issues.map(issue => {
+
+      if (issue.state === 'unavailable'){
+        return html`
+          <div class='issue'>
+            <div class="name">
+              <span class='property' @click=${()=> this.openLink(`${issue.attributes.path}`)} title='Open repository'>
+                ${this.config.show_github_icon && html`<ha-icon icon="${issue.attributes.icon}"></ha-icon>` || ''}
+                <span class='issue-name'>${issue.attributes.friendly_name + ' unavailable'}</span>
+              </span>
+            </div>
+          </div>
+        `
+      }
+      
+      return html`
         <div class='issue'>
           <div class="name">
             <span class='property' @click=${() => this.openLink(`${issue.attributes.path}`)}  title='Open repository'>
-              <ha-icon icon="${issue.attributes.icon}"></ha-icon>
+              ${this.config.show_github_icon && html`<ha-icon icon="${issue.attributes.icon}"></ha-icon>` || ''}
               <span class='issue-name'>${issue.attributes.name}</span>
             </span>
           </div>
@@ -109,7 +118,8 @@ class GithubCard extends LitElement {
 
           </div>
         </div>
-      `);
+      `
+    });
 
     return html`
       <ha-card class='github-card'>
@@ -136,9 +146,12 @@ class GithubCard extends LitElement {
    * get amtching issue sensors
    */
   get issues() {
-    return this.config.entities
+    const issues = this.config.entities
       .map(entity => this.hass.states[entity])
-      .filter(issue => issue);
+      .filter(Boolean);
+
+    console.log({ issues })
+    return issues;
   }
 }
 
