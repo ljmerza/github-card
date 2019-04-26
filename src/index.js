@@ -149,8 +149,6 @@ class GithubCard extends LitElement {
     const issues = this.config.entities
       .map(entity => this.hass.states[entity])
       .filter(Boolean);
-
-    console.log({ issues })
     return issues;
   }
 }

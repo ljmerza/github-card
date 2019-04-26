@@ -382,5 +382,5 @@ var _t="adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prot
           ${t}
         </div>
       </ha-card>
-    `}openLink(t){window.open(`${this.githubBaseUrl}/${t}`)}get issues(){const t=this.config.entities.map(t=>this.hass.states[t]).filter(Boolean);return console.log({issues:t}),t}}customElements.define("github-card",Ft)}]);
+    `}openLink(t){window.open(`${this.githubBaseUrl}/${t}`)}get issues(){return this.config.entities.map(t=>this.hass.states[t]).filter(Boolean)}}customElements.define("github-card",Ft)}]);
 //# sourceMappingURL=github-card.js.map
