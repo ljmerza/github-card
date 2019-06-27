@@ -1,4 +1,5 @@
 # Github Card for Home Assistant
+Show issues, pull requests, and more for your github repositories
 
 <img src='https://raw.githubusercontent.com/ljmerza/github-card/master/card.png' />
 
@@ -6,17 +7,17 @@
 [![License][license-shield]](LICENSE.md)
 ![Project Maintenance][maintenance-shield]
 
-## Options
+## Installation through [HACS](https://github.com/custom-components/hacs)
+---
+Add the following to resources in your lovelace config:
 
-| Name | Type | Requirement | `Default` Description
-| :---- | :---- | :------- | :----------- |
-| title | string | **Optional** | `Github` Change card title
-| entities | list | **Required** | List of github sensors to display
-| show_extended | boolean | **Optional** | `true` Show/hide tags, forks, and commits links
-| show_github_icon | boolean | **Optional** | `true` Show/hide Github icon
+```yaml
+resources:
+  - url: /community_plugin/github-card/github-card.js
+```
 
-
-## Example lovelace configurations:
+## Configurations:
+---
 ```yaml
 views:
   - type: custom:github-card
@@ -25,6 +26,17 @@ views:
     - sensor.waze_card
     - sensor.light_entity_card
 ```
+
+## Options
+---
+| Name | Type | Requirement | `Default` Description
+| :---- | :---- | :------- | :----------- |
+| title | string | **Optional** | `Github` Change card title
+| entities | list | **Required** | List of github sensors to display
+| show_extended | boolean | **Optional** | `true` Show/hide tags, forks, and commits links
+| show_github_icon | boolean | **Optional** | `true` Show/hide Github icon
+
+---
 
 Enjoy my card? Help me out for a couple of :beers: or a :coffee:!
 
