@@ -19,12 +19,11 @@ resources:
 ## Configurations:
 ---
 ```yaml
-views:
-  - type: custom:github-card
-    entities:
-    - sensor.calendar_card
-    - sensor.waze_card
-    - sensor.light_entity_card
+type: custom:github-card
+entities:
+  - sensor.calendar_card
+  - sensor.waze_card
+  - sensor.light_entity_card
 ```
 
 ## Options
