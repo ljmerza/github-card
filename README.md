@@ -14,6 +14,7 @@ Add the following to resources in your lovelace config:
 ```yaml
 resources:
   - url: /community_plugin/github-card/github-card.js
+    type: js
 ```
 
 ## Configurations:
