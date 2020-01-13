@@ -1,0 +1,5 @@
+{
+    "name": "Github Card",
+    "render_readme": true,
+    "filename": "dist/github-card.js"
+}
